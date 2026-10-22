@@ -1,3 +1,49 @@
+### added
+- Your markdown file and its additional resources should be located in a folder structure such as this: 
+```
+notes-folder/
+├── _resources/
+│   ├── IMG_6436.png
+│   ├── IMG_6438.png
+│   └── ...
+├── input.md
+```
+- For example, let's take this as starting folder:
+```
+Appunti Corso Saldatura/
+├── _resources/
+│   ├── IMG_6436.png
+│   ├── IMG_6438.png
+│   └── ...
+├── Appunti Corso Saldatura.md
+```
+- Run, from locally cloned repo:
+```
+docker run --rm \
+  -v "$HOME/Desktop/Appunti Corso Saldatura:/data" \
+  -v "/media/fede-ubuntu/STORAGE1/CW/_assets:/_assets:ro" \
+  -v "/media/fede-ubuntu/STORAGE1/CW/_assets/fonts:/fonts:ro" \
+  -w /data \
+  --entrypoint /bin/sh \
+  jakobkmar/pandoc-all-in-one \
+  -c '
+    cp /_assets/frontmatter.yaml .
+    cp /_assets/latex-header.tex .
+
+    pandoc "Appunti Corso Saldatura.md" \
+      --from=markdown+lists_without_preceding_blankline+implicit_figures \
+      --metadata-file=/_assets/frontmatter.yaml \
+      --include-in-header=/_assets/latex-header.tex \
+      --pdf-engine=lualatex \
+      -o "Appunti Corso Saldatura.pdf"
+  '
+```
+and link your `metadata.yaml`, `header.tex`, `bibliography.bib` to the correct location. In this way, the YAML frontmatter should control document-level settings, while the LaTeX header should handle custom typography and formatting that Pandoc's metadata cannot express directly.
+
+
+
+
+
 # pandoc-all-in-one
 
 All-in-one Docker image for [`pandoc`](https://pandoc.org/) (see [goals](#goals)) including:
