@@ -39,8 +39,14 @@ docker run --rm \
   '
 ```
 and link your `metadata.yaml`, `header.tex`, `bibliography.bib` to the correct location. In this way, the YAML frontmatter should control document-level settings, while the LaTeX header should handle custom typography and formatting that Pandoc's metadata cannot express directly.
-
-
+- Keep updated with:
+```
+git add .
+#stage your changes.
+git commit -m "feat: ..."
+#create a commit.
+git push -u
+```
 
 
 
