@@ -19,10 +19,15 @@ Appunti Corso Saldatura/
 ```
 - Run, from locally cloned repo:
 ```
+NOTES="$HOME/Desktop/Appunti Corso Saldatura"
+ASSETS="/media/fede-ubuntu/STORAGE1/CW/_assets"
+INPUT="Appunti Corso Saldatura.md"
+OUTPUT="Appunti Corso Saldatura.pdf"
+
 docker run --rm \
-  -v "$HOME/Desktop/Appunti Corso Saldatura:/data" \
-  -v "/media/fede-ubuntu/STORAGE1/CW/_assets:/_assets:ro" \
-  -v "/media/fede-ubuntu/STORAGE1/CW/_assets/fonts:/fonts:ro" \
+  -v "$NOTES:/data" \
+  -v "$ASSETS:/_assets:ro" \
+  -v "$ASSETS/fonts:/fonts:ro" \
   -w /data \
   --entrypoint /bin/sh \
   jakobkmar/pandoc-all-in-one \
@@ -30,13 +35,13 @@ docker run --rm \
     cp /_assets/frontmatter.yaml .
     cp /_assets/latex-header.tex .
 
-    pandoc "Appunti Corso Saldatura.md" \
+    pandoc "$1" \
       --from=markdown+lists_without_preceding_blankline+implicit_figures \
       --metadata-file=/_assets/frontmatter.yaml \
       --include-in-header=/_assets/latex-header.tex \
       --pdf-engine=lualatex \
-      -o "Appunti Corso Saldatura.pdf"
-  '
+      -o "$2"
+  ' sh "$INPUT" "$OUTPUT"
 ```
 and link your `metadata.yaml`, `header.tex`, `bibliography.bib` to the correct location. In this way, the YAML frontmatter should control document-level settings, while the LaTeX header should handle custom typography and formatting that Pandoc's metadata cannot express directly.
 - Keep updated with:
