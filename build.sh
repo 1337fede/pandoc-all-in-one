@@ -30,13 +30,18 @@ docker run --rm \
   -c '
     cp /_assets/frontmatter.yaml .
     cp /_assets/latex-header.tex .
+    cp /_assets/mermaid.lua .
 
     pandoc "$1" \
       --from=markdown+lists_without_preceding_blankline+implicit_figures \
+      -L mermaid.lua \
+      -L include-code-files/include-code-files.lua \
+      -L diagram-generator/diagram-generator.lua \
       --metadata-file=/_assets/frontmatter.yaml \
       --include-in-header=/_assets/latex-header.tex \
       --bibliography="bibliography.bib" \
       --citeproc \
+      --verbose \
       --pdf-engine=lualatex \
       -o "$2"
   ' sh "$INPUT" "$OUTPUT"

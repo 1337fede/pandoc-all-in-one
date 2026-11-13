@@ -6,10 +6,10 @@ ENV CHROME_BIN="/usr/bin/chromium-browser" \
 RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 RUN dnf update -y
 
-RUN dnf install -y texlive-scheme-medium
+RUN dnf install -y texlive-scheme-full
 RUN dnf install -y chromium yarnpkg
 
-RUN yarnpkg global add @mermaid-js/mermaid-cli
+RUN yarnpkg global add @mermaid-js/mermaid-cli puppeteer@^25.0.0
 RUN dnf install -y plantuml
 RUN dnf install -y python3 python3-matplotlib python3-numpy
 RUN dnf install -y graphviz

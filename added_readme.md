@@ -267,6 +267,11 @@ notes-folder/
 │   └── ...
 ├── input.md
 ```
+- Build, from locally cloned repo, with:
+```
+docker build \
+  -t "$IMAGE" .
+```
 - Run, from locally cloned repo:
 ```
 bash build.sh
